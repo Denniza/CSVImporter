@@ -16,6 +16,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class ApplicationReadyListener implements ApplicationListener<ApplicationReadyEvent> {
     private final EventService eventService;
+
     @Value("${paths.csv-file}")
     private String csvFilePath;
 

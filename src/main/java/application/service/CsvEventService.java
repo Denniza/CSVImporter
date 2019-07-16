@@ -42,7 +42,7 @@ public class CsvEventService implements EventService {
         repository.saveAll(
                 allRows.stream()
                         .map(row -> {
-                            log.info("Writing next line to database as Event entity: " + Arrays.toString(row));
+//                            log.info("Writing next line to database as Event entity: " + Arrays.toString(row));
 
                             try {
                                 return new Event(
@@ -74,8 +74,7 @@ public class CsvEventService implements EventService {
     @Override
     @Transactional(readOnly = true)
     public List<Event> getLastEventsForHour() {
-            List<Event> eventsBeforeOneHour = repository.findAllBeforeHourAgo(getOneHourAgo());
-            return eventsBeforeOneHour;
+        return repository.findAllBeforeHourAgo(getOneHourAgo());
 //
         }
 
@@ -99,6 +98,8 @@ public class CsvEventService implements EventService {
         allEvents.stream()
                 .map(Event::getFormId)
                 .forEach(formId -> map.merge(formId, 1L, Long::sum));
+
+        allEvents.forEach(System.out::println);
 
         return map.entrySet().stream()
                 .sorted((entry1, entry2) -> entry2.getValue().compareTo(entry1.getValue()))

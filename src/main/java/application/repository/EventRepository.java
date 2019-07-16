@@ -10,13 +10,15 @@ import org.springframework.stereotype.Repository;
 import java.util.Date;
 import java.util.List;
 
+
 @Repository
 public interface EventRepository extends JpaRepository<Event, Long> {
 
     @Query(nativeQuery = true, value = "(insert your sql query here)")
     List<Event> getEventsWhereActivityIsNotOver();
 
-    @Query("FROM Event e WHERE e.time <= :hourAgo")
+//    @Query("FROM Event e  WHERE e.time <= :hourAgo")
+    @Query("SELECT e.ssoid,e.formId FROM Event e WHERE e.time <= :hourAgo")
     List<Event> findAllBeforeHourAgo(@Param("hourAgo") Date hourAgo);
 
 

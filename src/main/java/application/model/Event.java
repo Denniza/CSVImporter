@@ -35,15 +35,15 @@ public class Event {
     private Date date;
 
     public Event(String ssoid,
+                 String grp,
                  String type,
                  String subtype,
                  String url,
                  String orgid,
-                 String grp,
+                 String formId,
                  String code,
                  String ltpa,
                  String sudirresponse,
-                 String formId,
                  Date time,
                  Date date) {
         this.ssoid = ssoid;
