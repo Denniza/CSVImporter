@@ -85,7 +85,21 @@ public class CsvEventService implements EventService {
     @Override
     @Transactional(readOnly = true)
     public List<Event> getEventsWhereActivityIsNotOver() {
-        return null;
+
+        Set<Event> resultSet = new HashSet<>();
+
+        List<Event> startedEvents = repository.getStartedEvents();
+        List<Event> notEndedEvents = repository.getEventsWhichNotEnded();
+
+        for(Event event:startedEvents){
+            for(Event event2:notEndedEvents){
+                if(event.getSsoid().equals(event2.getSsoid())&&event.getFormId().equals(event2.getFormId())){
+                    resultSet.add(event2);
+                    break;
+                }
+            }
+        }
+        return new ArrayList<>(resultSet);
     }
 
     @Override
@@ -98,8 +112,6 @@ public class CsvEventService implements EventService {
         allEvents.stream()
                 .map(Event::getFormId)
                 .forEach(formId -> map.merge(formId, 1L, Long::sum));
-
-        allEvents.forEach(System.out::println);
 
         return map.entrySet().stream()
                 .sorted((entry1, entry2) -> entry2.getValue().compareTo(entry1.getValue()))

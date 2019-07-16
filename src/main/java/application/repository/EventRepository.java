@@ -14,14 +14,20 @@ import java.util.List;
 @Repository
 public interface EventRepository extends JpaRepository<Event, Long> {
 
-    @Query(nativeQuery = true, value = "(insert your sql query here)")
+
+    @Query("FROM Event e where e.subtype='start'")
+    List<Event> getStartedEvents();
+
+    @Query("FROM Event e where e.subtype not like 'start' and e.subtype not like 'send'")
+    List<Event> getEventsWhichNotEnded();
+
+    @Query("SELECT e.ssoid, e.subtype from Event e, Event sec ")
     List<Event> getEventsWhereActivityIsNotOver();
 
-//    @Query("FROM Event e  WHERE e.time <= :hourAgo")
     @Query("SELECT e.ssoid,e.formId FROM Event e WHERE e.time <= :hourAgo")
     List<Event> findAllBeforeHourAgo(@Param("hourAgo") Date hourAgo);
 
 
     @Query("FROM Event e ORDER BY e.formId DESC")
-    List<Event> findAllOrderByFormId(); // FROM Event e ORDER BY e.formId DESC (HQL)
+    List<Event> findAllOrderByFormId();
 }
