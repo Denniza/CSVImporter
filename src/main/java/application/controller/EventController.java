@@ -2,31 +2,39 @@ package application.controller;
 import application.model.Event;
 import application.service.EventService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 
-@RestController
-@RequestMapping("event")
+@Controller
 @RequiredArgsConstructor
 public class EventController {
     private final EventService eventService;
 
-    @GetMapping("lastEventsForHour")
-    public List<Event> getLastEventsForHour() {
-        return eventService.getLastEventsForHour();
+    @GetMapping("/main")
+    public String greeting(){
+        return "greeting";
     }
 
-    @GetMapping("eventsWhereActivityIsNotOver")
-    public List<Event> getEventsWhereActivityIsNotOver() {
-        return eventService.getEventsWhereActivityIsNotOver();
+    @GetMapping("/lastEventsForHour")
+    public String getLastEventsForHour(Model model) {
+        model.addAttribute("events",eventService.getLastEventsForHour());
+        return "lastEventsForHour";
     }
 
-    @GetMapping("top-5")
-    public List<String> getTopFive() {
-        return eventService.getTopFiveForms();
+    @GetMapping("/notOverActivities")
+    public String getEventsWhereActivityIsNotOver(Model model) {
+        model.addAttribute("events", eventService.getEventsWhereActivityIsNotOver());
+        return "notOverActivities";
+    }
+
+    @GetMapping("/top-5")
+    public String getTopFive(Model model) {
+
+        model.addAttribute("events",eventService.getTopFiveForms());
+        return "top5Forms";
     }
 }

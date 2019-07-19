@@ -75,8 +75,7 @@ public class CsvEventService implements EventService {
     @Transactional(readOnly = true)
     public List<Event> getLastEventsForHour() {
         return repository.findAllBeforeHourAgo(getOneHourAgo());
-//
-        }
+    }
 
     private Date getOneHourAgo() {
         return (new Date(new Date().getTime() - 1000*60*60));

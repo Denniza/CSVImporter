@@ -24,7 +24,7 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     @Query("SELECT e.ssoid, e.subtype from Event e, Event sec ")
     List<Event> getEventsWhereActivityIsNotOver();
 
-    @Query("SELECT e.ssoid,e.formId FROM Event e WHERE e.time <= :hourAgo")
+    @Query("FROM Event e WHERE e.time <= :hourAgo")
     List<Event> findAllBeforeHourAgo(@Param("hourAgo") Date hourAgo);
 
 
