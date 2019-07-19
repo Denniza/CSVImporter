@@ -25,7 +25,6 @@ import java.util.stream.Collectors;
 public class CsvEventService implements EventService {
     private final EventRepository repository;
 
-
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void importEvents(String path) throws IOException {

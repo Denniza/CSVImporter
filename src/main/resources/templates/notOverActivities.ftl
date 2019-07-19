@@ -15,5 +15,4 @@
         </#list>
     </table>
 
-
 </@c.page>

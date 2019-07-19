@@ -6,7 +6,6 @@
         <caption>Top 5 Forms</caption>
         <tr>
             <th>formId</th>
-
         </tr>
         <#list events as event>
             <tr>
